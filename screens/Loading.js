@@ -1,25 +1,15 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import {
     SafeAreaView,
-    View,
-    Text,
-    Button,
-    StyleSheet
+    View, StyleSheet, ActivityIndicator
 } from 'react-native';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
-import { AuthContext } from '../App'
-
-const ImageList = () => {
-    const { logOut } = useContext(AuthContext);
+const Home = ({ navigation }) => {
     return (
         <SafeAreaView style={styles.body}>
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                 <View style={styles.sectionContainer}>
-                    <Text>ImageList Screen</Text>
-                    <Button
-                        title="logOut"
-                        onPress={() => logOut()}
-                    />
+                    <ActivityIndicator />
                 </View>
             </View>
         </SafeAreaView>
@@ -37,4 +27,4 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     }
 });
-export default ImageList
+export default Home
