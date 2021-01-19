@@ -1,19 +1,27 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
     SafeAreaView,
     View,
-    Text, Button, StyleSheet
+    Text, Button, StyleSheet, Image
 } from 'react-native';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
-const Home = ({ navigation }) => {
+import { AuthContext } from '../App'
+
+const Settings = ({ navigation }) => {
+    const { logOut } = useContext(AuthContext);
     return (
         <SafeAreaView style={styles.body}>
+            <Image
+                source={{ uri: 'https://images.pexels.com/photos/1231265/pexels-photo-1231265.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500' }}
+                style={[StyleSheet.absoluteFillObject, { opacity: .4 }]}
+                blurRadius={70}
+            />
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                 <View style={styles.sectionContainer}>
-                    <Text>Home Screen</Text>
+                    <Text>Settings</Text>
                     <Button
-                        title="Go to ImageList"
-                        onPress={() => navigation.navigate('ImageList')}
+                        title="logOut"
+                        onPress={() => logOut()}
                     />
                 </View>
             </View>
@@ -32,4 +40,4 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     }
 });
-export default Home
+export default Settings

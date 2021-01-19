@@ -17,6 +17,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import service from './_services'
 import ImageList from './screens/ImageList'
 import Login from './screens/Login'
+import Settings from './screens/Settings'
 import Loading from './screens/Loading'
 
 export const AuthContext = createContext();
@@ -35,20 +36,17 @@ const App: () => React$Node = () => {
         case 'LOGIN':
           return {
             ...prevState,
-            isLogOut: false,
             authToken: action.token,
           };
         case 'LOGOUT':
           return {
             ...prevState,
-            isLogOut: true,
             authToken: null,
           };
       }
     },
     {
       loading: true,
-      isLogOut: false,
       authToken: null,
     }
   );
@@ -80,8 +78,13 @@ const App: () => React$Node = () => {
           }
         })
       },
-      logOut: () => {
-        dispatch({ type: 'LOGOUT' })
+      logOut: async () => {
+        try {
+          await AsyncStorage.removeItem('authToken')
+          dispatch({ type: 'LOGOUT' })
+        } catch (e) {
+          Reactotron.log(e)
+        }
       }
     }),
     []
@@ -98,7 +101,10 @@ const App: () => React$Node = () => {
               ) : state.authToken == null ? (
                 <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
               ) : (
-                    <Stack.Screen name="ImageList" component={ImageList} initialParams={{ authToken: state.authToken }} options={{ headerShown: false }} />
+                    <>
+                      <Stack.Screen name="ImageList" component={ImageList} initialParams={{ authToken: state.authToken }} options={{ headerShown: false }} />
+                      <Stack.Screen name="Settings" component={Settings} options={{ headerShown: false }} />
+                    </>
                   )}
             </Stack.Navigator>
           </NavigationContainer>

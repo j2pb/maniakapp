@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { StatusBar, Image, Animated, Text, View, StyleSheet } from 'react-native';
+import { StatusBar, Image, Animated, Text, View, StyleSheet, Button } from 'react-native';
 import service from '../_services'
+
 
 const SPACING = 20;
 const IMG_SIZE = 70;
@@ -14,18 +15,20 @@ const ImageList = ({ navigation, route }) => {
         if (route.params.authToken) {
             getImages(route.params.authToken)
         }
-    }, [route.params.authToken]);
+    }, []);
     const getImages = (authToken) => {
         service.getImages(authToken).then((r) => {
             setimages(r)
         })
     }
     return <View style={styles.body}>
+
         <Image
             source={{ uri: 'https://images.pexels.com/photos/1231265/pexels-photo-1231265.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500' }}
             style={[StyleSheet.absoluteFillObject, { opacity: .4 }]}
             blurRadius={70}
         />
+
         <Animated.FlatList
             data={images}
             keyExtractor={item => item.id.toString()}
@@ -59,6 +62,15 @@ const ImageList = ({ navigation, route }) => {
                 </Animated.View>
             }}
         />
+        <View style={styles.bottomView}>
+            <View style={styles.button}>
+                <Button
+                    color="#fff"
+                    title="?"
+                    onPress={() => navigation.navigate('Settings')}
+                />
+            </View>
+        </View>
     </View>
 }
 const styles = StyleSheet.create({
@@ -101,7 +113,27 @@ const styles = StyleSheet.create({
     sectionContainer: {
         alignItems: 'center',
         justifyContent: 'center'
-    }
+    },
+    bottomView: {
+        width: '100%',
+        height: 100,
+        justifyContent: 'center',
+        alignItems: 'flex-end',
+        position: 'absolute',
+        bottom: 30,
+        right: 10,
+        zIndex: 1
+    },
+    button: {
+        width: 60,
+        height: 60,
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 10,
+        borderRadius: 100,
+        backgroundColor: '#e05b6b',
+
+    },
 });
 
 export default ImageList
