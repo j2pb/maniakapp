@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { View, TextInput, Button } from 'react-native';
+import { View, TextInput, Button, StatusBar, Image, StyleSheet } from 'react-native';
 import { AuthContext } from '../App'
 
 const Login = () => {
@@ -9,7 +9,13 @@ const Login = () => {
     const { login } = useContext(AuthContext);
 
     return (
-        <View>
+        <View style={{ flex: 1, backgroundColor: '#fff' }}>
+            <StatusBar hidden />
+            <Image
+                source={{ uri: 'https://images.pexels.com/photos/1231265/pexels-photo-1231265.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500' }}
+                style={[StyleSheet.absoluteFillObject, { opacity: .4 }]}
+                blurRadius={70}
+            />
             <TextInput
                 placeholder="Email"
                 value={username}

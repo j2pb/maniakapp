@@ -8,6 +8,20 @@ const login = ({ username, password }) => {
         console.log(err)
     })
 }
+const getImages = (authToken) => {
+
+    let additionalConfig = {
+        headers: {
+            Authorization: "Bearer " + authToken,
+        }
+    }
+    return axios.get(config.endpoint.images, additionalConfig).then(({ data }) => {
+        return data
+    }).catch(err => {
+        console.log(err)
+    })
+}
 export default {
-    login
+    login,
+    getImages
 }

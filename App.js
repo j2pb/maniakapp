@@ -96,9 +96,9 @@ const App: () => React$Node = () => {
               {state.loading ? (
                 <Stack.Screen name="Loading" component={Loading} options={{ headerShown: false }} />
               ) : state.authToken == null ? (
-                <Stack.Screen name="Login" component={Login} />
+                <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
               ) : (
-                    <Stack.Screen name="ImageList" component={ImageList} />
+                    <Stack.Screen name="ImageList" component={ImageList} initialParams={{ authToken: state.authToken }} options={{ headerShown: false }} />
                   )}
             </Stack.Navigator>
           </NavigationContainer>
