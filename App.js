@@ -14,6 +14,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Reactotron from 'reactotron-react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import service from './_services'
 import ImageList from './screens/ImageList'
 import Login from './screens/Login'
 import Loading from './screens/Loading'
@@ -70,13 +71,14 @@ const App: () => React$Node = () => {
   const authContext = useMemo(
     () => ({
       login: async data => {
-        Reactotron.log("login", data)
-        try {
-          await AsyncStorage.setItem('authToken', "dummytoken")
-        } catch (e) {
-          Reactotron.log(e)
-        }
-        dispatch({ type: 'LOGIN', token: 'dummytoken' });
+        service.login(data).then(async (r) => {
+          try {
+            await AsyncStorage.setItem('authToken', r.token)
+            dispatch({ type: 'LOGIN', token: r.token });
+          } catch (e) {
+            Reactotron.log(e)
+          }
+        })
       },
       logOut: () => {
         dispatch({ type: 'LOGOUT' })
